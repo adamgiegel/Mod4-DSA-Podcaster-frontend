@@ -10,6 +10,7 @@ import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route
 } from "react-router-dom";
 
@@ -26,7 +27,8 @@ class App extends Component {
     lastEpisodeIndex: 5,
     search: '',
     filter: [],
-    currentUser: {}
+    currentUser: {},
+    loggedIn: false
   }
 
   componentDidMount(){
@@ -116,9 +118,26 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(res => this.setState({
-      currentUser: res
+      currentUser: res,
+      loggedIn: true
     }))
     // .then(window.location.href = 'http://localhost:3001/dashboard')
+  }
+
+  handleFavoritesButton = (e) => {
+    console.log("handleFavoritesButton", e, this.state.currentUser.id, this.state.podcast.id);
+    fetch('http://localhost:3000/api/v1/playlists', {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body:JSON.stringify({
+        "name": "favorites",
+        "user_id": this.state.currentUser.id,
+        "podcast_id": this.state.podcast.id
+      })
+    })
   }
 
   dashBoardComponents(){
@@ -139,6 +158,7 @@ class App extends Component {
           </div>
           <div className="col s9">
             <SelectedPodcast
+              handleFavoritesButton={this.handleFavoritesButton}
               allPodcast={this.state.allPodcast}
               podcast={this.state.podcast}
               show={this.state.show}
@@ -154,17 +174,27 @@ class App extends Component {
     )
   }
 
-  rootComponents(){
-    return <Login handleLogin={this.handleLogin}/>
+  dashBoardRoute(){
+    if (this.state.loggedIn === true){
+      return <Route path="/dashboard" component={() => this.dashBoardComponents()} />
+    } else {
+      return <Redirect to="/" />
+    }
   }
+
+  // loginRoute(){
+  //   return <Login handleLogin={this.handleLogin}/>
+  // }
 
   render() {
     console.log("App, State: ", this.state)
     return (
       <Router>
         <div className="App">
-          <Route exact path="/" component={() => this.rootComponents()} />
-          <Route path="/dashboard" component={() => this.dashBoardComponents()} />
+          <Route exact path="/" render={()=>(
+            this.state.loggedIn ? (<Redirect to="/dashboard"/>) : (<Login handleLogin={this.handleLogin}/>)
+          )} />
+          {this.dashBoardRoute()}
         </div>
       </Router>
     )
