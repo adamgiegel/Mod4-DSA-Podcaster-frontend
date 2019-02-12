@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import Create from './Create'
+// import Create from './Create'
 import SearchForm from './SearchForm'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import DropDown from './DropDown'
-import {Dropdown, NavItem, Button} from 'react-materialize'
-import 'jquery';
+// import 'materialize-css';
+// import 'materialize-css/dist/css/materialize.min.css';
 
 class AllPodcast extends Component {
 
@@ -27,35 +25,36 @@ class AllPodcast extends Component {
     <div>
     <div className="card-panel hoverable">
       <div>
-      <DropDown />
-      <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
+        <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
         <button className="btn" onClick={this.props.addMore}>Load More</button>
         <button className="btn" onClick={this.props.back}>Go Back</button>
       </div>
       <div>
-      <ul className="collection with-header">
-      {
-        this.props.allPodcast.slice(this.props.firstIndex, this.props.lastIndex).map(podcast => {
-        return( <div key={podcast.id}>
-        <li className="card-panel hoverable collection-item left-align" className="podcast-menu"
-        onClick={() => this.props.handlePodcastMenuClick(podcast.id)} id="title">
-
-        <img src={podcast.thumbnail} alt="" className="left square"/>
-        {this.text_truncate(podcast.title, 30, '..')}</li>
-        <br/>
-          </div>
-        )})
-      }
-       </ul>
+        <ul className="collection with-header">
+          {
+            this.props.allPodcast.slice(this.props.firstIndex, this.props.lastIndex).map(podcast => {
+              return(
+                <div key={podcast.id}>
+                  <li
+                    className="card-panel hoverable collection-item left-align"
+                    name="podcast-menu"
+                    onClick={() => this.props.handlePodcastMenuClick(podcast.id)}
+                    id="title">
+                    <img src={podcast.thumbnail} alt="" className="left square"/>
+                    {this.text_truncate(podcast.title, 30, '..')}
+                  </li>
+                  <br/>
+                </div>
+              )
+            })
+          }
+        </ul>
       </div>
-      <a className="waves-effect waves-light btn">Create</a>
+      <button className="waves-effect waves-light btn">Create</button>
     </div>
     </div>
     )
   }
 }
-//
-// <li class="collection-item avatar">
-//      <img src="images/yuna.jpg" alt="" class="circle">
 
 export default AllPodcast
