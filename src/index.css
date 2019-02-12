@@ -33,3 +33,14 @@ code {
   width: 13%;
   align-content: flex-start;
 }
+
+.listitem {
+  padding: 0px;
+}
+
+.podcasts{
+  width: auto;
+  height: 500px;
+  background-color: #fff;
+  overflow: scroll;
+}

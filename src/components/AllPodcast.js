@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import Create from './Create'
 import SearchForm from './SearchForm'
-// import 'materialize-css';
-// import 'materialize-css/dist/css/materialize.min.css';
+import {InfiniteScroll} from 'react-materialize'
+
 
 class AllPodcast extends Component {
 
@@ -23,35 +23,34 @@ class AllPodcast extends Component {
   render(){
   return(
     <div>
-    <div className="card-panel hoverable">
-      <div>
-        <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
-        <button className="btn" onClick={this.props.addMore}>Load More</button>
-        <button className="btn" onClick={this.props.back}>Go Back</button>
+      <div className="card-panel hoverable">
+        <div>
+          <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
+          <button className="btn" onClick={this.props.addMore}>Load More</button>
+          <button className="btn" onClick={this.props.back}>Go Back</button>
+        </div>
+        <div className="podcasts">
+          <ul className="collection with-header">
+            {
+              this.props.allPodcast.map(podcast => {
+                return(
+                  <div key={podcast.id}>
+                    <li
+                      className="listitem hoverable collection-item left-align"
+                      name="podcast-menu"
+                      onClick={() => this.props.handlePodcastMenuClick(podcast.id)}
+                      id="title">
+                      <img src={podcast.thumbnail} alt="" className="left square"/>
+                      {this.text_truncate(podcast.title, 30, '..')}
+                    </li>
+                    <br/>
+                  </div>
+                )
+              })
+            }
+          </ul>
+        </div>
       </div>
-      <div>
-        <ul className="collection with-header">
-          {
-            this.props.allPodcast.slice(this.props.firstIndex, this.props.lastIndex).map(podcast => {
-              return(
-                <div key={podcast.id}>
-                  <li
-                    className="card-panel hoverable collection-item left-align"
-                    name="podcast-menu"
-                    onClick={() => this.props.handlePodcastMenuClick(podcast.id)}
-                    id="title">
-                    <img src={podcast.thumbnail} alt="" className="left square"/>
-                    {this.text_truncate(podcast.title, 30, '..')}
-                  </li>
-                  <br/>
-                </div>
-              )
-            })
-          }
-        </ul>
-      </div>
-      <button className="waves-effect waves-light btn">Create</button>
-    </div>
     </div>
     )
   }
