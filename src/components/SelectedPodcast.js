@@ -1,7 +1,7 @@
 import React from 'react';
 import EpisodeContainer from './EpisodeContainer'
 
-const SelectedPodcast = ({podcast, show, allPodcast, handleEpisodeMenuClick, lastEpisodeIndex, firstEpisodeIndex, addMoreEpisodes, backEpisodes}) => {
+const SelectedPodcast = ({podcast, show, handleEpisodeMenuClick, lastEpisodeIndex, firstEpisodeIndex, addMoreEpisodes, backEpisodes}) => {
   const clickedPodcast =
   <div className="card-panel hoverable">
   <h1>{podcast.title}</h1>

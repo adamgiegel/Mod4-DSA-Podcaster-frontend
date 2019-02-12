@@ -9,11 +9,8 @@ import DropDown from './components/DropDown'
 import SelectedPodcast from './components/SelectedPodcast'
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
-import {Dropdown, NavItem, Button, Container} from 'react-materialize'
-import 'jquery';
 
 class App extends Component {
-
   state = {
     allPodcast: [],
     podcast: {},
@@ -112,25 +109,25 @@ back = () => {
           <Login />
           <div className='col s3'>
             <AllPodcast
-            addMore={this.addMore}
-            back={this.back}
-            firstIndex={this.state.firstIndex}
-            lastIndex={this.state.lastIndex}
-            allPodcast={this.filterSearchBar()}
-            handleSearch={this.handleSearch}
-            search={this.state.search}
-            handlePodcastMenuClick={this.handlePodcastMenuClick}/>
+              addMore={this.addMore}
+              back={this.back}
+              firstIndex={this.state.firstIndex}
+              lastIndex={this.state.lastIndex}
+              allPodcast={this.filterSearchBar()}
+              handleSearch={this.handleSearch}
+              search={this.state.search}
+              handlePodcastMenuClick={this.handlePodcastMenuClick}/>
           </div>
           <div className="col s9">
             <SelectedPodcast
-            allPodcast={this.state.allPodcast}
-            podcast={this.state.podcast}
-            show={this.state.show}
-            handleEpisodeMenuClick={this.handleEpisodeMenuClick}
-            addMoreEpisodes={this.addMoreEpisodes}
-            backEpisodes={this.backEpisodes}
-            firstEpisodeIndex={this.state.firstEpisodeIndex}
-            lastEpisodeIndex={this.state.lastEpisodeIndex}/>
+              allPodcast={this.state.allPodcast}
+              podcast={this.state.podcast}
+              show={this.state.show}
+              handleEpisodeMenuClick={this.handleEpisodeMenuClick}
+              addMoreEpisodes={this.addMoreEpisodes}
+              backEpisodes={this.backEpisodes}
+              firstEpisodeIndex={this.state.firstEpisodeIndex}
+              lastEpisodeIndex={this.state.lastEpisodeIndex}/>
             <AudioPlayer thumbnail={this.state.thumbnail} podcast={this.state.podcast} episode={this.state.episode} />
           </div>
         </div>
