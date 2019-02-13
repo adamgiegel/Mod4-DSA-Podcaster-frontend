@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import 'materialize-css';
 // import 'materialize-css/dist/css/materialize.min.css';
+import { Card, Button, Row, Col } from 'react-materialize'
 
 class Login extends Component {
   state = {
@@ -54,8 +55,8 @@ class Login extends Component {
 
   loginForm(){
     return(
-      <div>
-        <form className='col s3' onSubmit={(e) => this.props.handleLogin(e, this.state.username, this.state.password)}>
+      <Card className="login">
+        <form onSubmit={(e) => this.props.handleLogin(e, this.state.username, this.state.password)}>
           <label>
             Username:
             <input value={this.state.username} onChange={(e) => this.handleChange(e)} type="text" name="username" placeholder="user your username"/>
@@ -64,17 +65,17 @@ class Login extends Component {
             Password:
             <input value={this.state.password} onChange={(e) => this.handleChange(e)} type="password" name="password"/>
           </label>
-          <input type="submit" value="Submit"/>
-        </form>
-        <button onClick={this.handleSignUpButton}>SignUp</button>
-      </div>
+          <Button>Submit</Button></form>
+          <br/>
+          <Button onClick={this.handleSignUpButton}>SignUp</Button>
+      </Card>
     )
   }
 
   signUpForm(){
     return (
-      <div>
-        <form className='col s3' onSubmit={(e) => this.fetchSignUp(e)}>
+      <Card>
+        <form onSubmit={(e) => this.fetchSignUp(e)}>
           <label>
             Name:
             <input value={this.state.name} onChange={(e) => this.handleChange(e)} type="text" name="name" placeholder="Put your damn name here"/>
@@ -87,19 +88,23 @@ class Login extends Component {
             Password:
             <input value={this.state.password} onChange={(e) => this.handleChange(e)} type="password" name="password"/>
           </label>
-          <input type="submit" value="Submit"/>
+          <Button>Submit</Button>
         </form>
-        <button onClick={this.handleSignUpButton}>Login Page</button>
-      </div>
+        <br/>
+        <Button onClick={this.handleSignUpButton}>Login Page</Button>
+      </Card>
     )
   }
 
   render(){
     // console.log("render: ", this.state);
     return(
-      <>
+      <Row >
+      <Col s={3}></Col>
+      <Col s={6} m={6}>
       {this.state.showSignUp === false ? this.loginForm() : this.signUpForm()}
-      </>
+      </Col>
+      </Row>
     )
   }
 } // end of Login component

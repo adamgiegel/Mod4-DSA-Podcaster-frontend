@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import AllPodcast from './components/AllPodcast'
-import AudioPlayer from './components/AudioPlayer'
+import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
 import SelectedPodcast from './components/SelectedPodcast'
@@ -13,6 +13,7 @@ import {
   Redirect,
   Route
 } from "react-router-dom";
+import StickyFooter from 'react-sticky-footer';
 
 class App extends Component {
   state = {
@@ -25,7 +26,9 @@ class App extends Component {
     filter: [],
     currentUser: {},
     loggedIn: false,
-    hide: true
+    hide: true,
+    favorites: [],
+    favoriteShow: false
   }
 
   componentDidMount(){
@@ -42,7 +45,11 @@ class App extends Component {
   }
 
   filterSearchBar = () => {
+    if(!this.state.favoriteShow){
     return this.state.allPodcast.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
+  } else {
+    return this.state.favorites.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
+  }
   }
 
   handleSearch = (e) => {
@@ -89,7 +96,8 @@ class App extends Component {
     .then(res => res.json())
     .then(res => this.setState({
       currentUser: res,
-      loggedIn: true
+      loggedIn: true,
+      favorites: res.podcasts
     }))
     // .then(window.location.href = 'http://localhost:3001/dashboard')
   }
@@ -116,6 +124,12 @@ handleAudioPlayer = () => {
   })
 }
 
+handleFavorites = () => {
+  this.setState({
+    favoriteShow: !this.state.favoriteShow
+  }, (e) => this.handleLogin(e, this.state.currentUser.username, this.state.currentUser.password))
+}
+
   dashBoardComponents(){
     return(
       <div>
@@ -123,6 +137,8 @@ handleAudioPlayer = () => {
         <div className='row'>
           <div className='col s3'>
             <AllPodcast
+              handleFavorites={this.handleFavorites}
+              favoriteShow={this.state.favoriteShow}
               allPodcast={this.filterSearchBar()}
               handleSearch={this.handleSearch}
               search={this.state.search}
@@ -135,12 +151,14 @@ handleAudioPlayer = () => {
               allPodcast={this.state.allPodcast}
               podcast={this.state.podcast}
               show={this.state.show}
-              handleEpisodeMenuClick={this.handleEpisodeMenuClick}/>
-            {!this.state.hide ?
-              <AudioPlayer thumbnail={this.state.thumbnail} podcast={this.state.podcast} episode={this.state.episode} />
-            : null}
+              handleEpisodeMenuClick={this.handleEpisodeMenuClick}
+              hide={this.state.hide}
+              thumbnail={this.state.thumbnail}
+              podcast={this.state.podcast}
+              episode={this.state.episode}/>
           </div>
         </div>
+        <Footer hide={this.state.hide} thumbnail={this.state.thumbnail} podcast={this.state.podcast} episode={this.state.episode} />
       </div>
     )
   }
@@ -149,7 +167,7 @@ handleAudioPlayer = () => {
 
   dashBoardRoute(){
     if (this.state.loggedIn === true){
-      return <Route path="/dashboard" component={() => this.dashBoardComponents()} />
+      return <Route path="/dashboard" render={() => this.dashBoardComponents()} />
     } else {
       return <Redirect to="/" />
     }

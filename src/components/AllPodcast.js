@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SearchForm from './SearchForm'
+import { Collection, CollectionItem, Button } from 'react-materialize'
 
 
 class AllPodcast extends Component {
@@ -18,34 +19,33 @@ class AllPodcast extends Component {
     }
   };
 
+
+
   render(){
   return(
-    <div>
+    <div className="content">
       <div className="card-panel hoverable">
         <div>
           <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
         </div>
-        <div className="podcasts">
-          <ul className="collection with-header">
+        <Button onClick={this.props.handleFavorites}></Button>
+        <div className="podcasts hoverable ">
+          <Collection>
             {
               this.props.allPodcast.map(podcast => {
                 return(
-                  <div key={podcast.id}>
-                    <li
-                      className="listitem hoverable collection-item left-align"
-                      name="podcast-menu"
+                    <CollectionItem
+                      className="card-panel hoverable left-align"
                       onClick={() => this.props.handlePodcastMenuClick(podcast.id)}
                       id="title">
                       <img src={podcast.thumbnail} alt="" className="left square"/>
                       {this.text_truncate(podcast.title, 30, '..')}
-                    </li>
-                    <br/>
-                  </div>
+                    </CollectionItem>
                 )
               })
             }
-          </ul>
-        </div>
+          </Collection>
+          </div>
       </div>
     </div>
     )

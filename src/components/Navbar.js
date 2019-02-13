@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Navbar extends Component {
   render(){
     return(
-      <nav>
-        <div className="nav-wrapper">
+      <nav className="nav-wrapper">
+        <div >
           <a href="c" className="cat-logo"></a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><a href='a'>Playlist</a></li>

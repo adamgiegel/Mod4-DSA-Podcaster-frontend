@@ -34,8 +34,7 @@ code {
 }
 
 .square {
-  width: 13%;
-  align-content: flex-start;
+  width: 10%;
 }
 
 .listitem {
@@ -51,4 +50,32 @@ code {
 
 .center {
   text-align: center;
+}
+
+.login {
+  display: flex;
+   flex-direction: column;
+   -webkit-box-align: center;
+   align-items: center;
+   padding: 60px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+}
+
+.nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+}
+
+.content {
+  padding-top: 100px;
 }
