@@ -3,14 +3,14 @@ import EpisodeContainer from './EpisodeContainer'
 import striptags from 'striptags'
 import { Button, Card, Row, Col } from 'react-materialize'
 
-const SelectedPodcast = ({podcast, show, handleEpisodeMenuClick, lastEpisodeIndex, firstEpisodeIndex, addMoreEpisodes, backEpisodes, handleFavoritesButton}) => {
+const SelectedPodcast = ({podcast, show, favoriteShow, handleEpisodeMenuClick, lastEpisodeIndex, firstEpisodeIndex, addMoreEpisodes, backEpisodes, handleFavoritesButton, handleDeleteFavoritesButton}) => {
 
   const clickedPodcast =
   <Card className="topping">
     <Row>
       <Col s={3}>
         <img src={podcast.img_url} alt='' />
-        <Button className="blue lighten-2" onClick={handleFavoritesButton}>Add to Favorites</Button>
+        {favoriteShow ? <Button className="blue lighten-2" onClick={() => handleDeleteFavoritesButton(podcast.id)}>Delete from Favorites</Button>:<Button className="blue lighten-2" onClick={handleFavoritesButton}>Add to Favorites</Button>}
       </Col>
       <Col s={6} m={6}>
         <h4>{podcast.title}</h4>

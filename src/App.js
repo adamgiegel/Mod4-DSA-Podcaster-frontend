@@ -45,10 +45,10 @@ class App extends Component {
 
   filterSearchBar = () => {
     if(!this.state.favoriteShow){
-    return this.state.allPodcast.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
-  } else {
-    return this.state.favorites.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
-  }
+      return this.state.allPodcast.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
+    } else {
+      return this.state.favorites.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
+    }
   }
 
   fetchUser(username, password){
@@ -68,7 +68,7 @@ class App extends Component {
     .then(res => this.setState({
       currentUser: res,
       loggedIn: true,
-      favorites: res.podcasts
+      favorites: res.podcasts // PLAYLIST HERE
     }))
   }
 
@@ -102,7 +102,6 @@ class App extends Component {
   handleLogin =(e, username, password) => {
     e.preventDefault()
     this.fetchUser(username, password)
-    // .then(window.location.href = 'http://localhost:3001/dashboard')
   }
 
   handleFavoritesButton = (e) => {
@@ -118,6 +117,15 @@ class App extends Component {
         "user_id": this.state.currentUser.id,
         "podcast_id": this.state.podcast.id
       })
+    })
+    .then(res => res.json())
+    .then((res) => console.log(res))
+    .then(() => this.fetchUser(this.state.currentUser.username, this.state.currentUser.password))
+  }
+
+  handleDeleteFavoritesButton = (id) => {
+    fetch(`http://localhost:3000/api/v1/playlists/${id}`, {
+      method: "DELETE"
     })
     .then(() => this.fetchUser(this.state.currentUser.username, this.state.currentUser.password))
   }
@@ -156,6 +164,8 @@ class App extends Component {
           </div>
           <div className="col s9">
             <SelectedPodcast
+              favoriteShow={this.state.favoriteShow}
+              handleDeleteFavoritesButton={this.handleDeleteFavoritesButton}
               addToPlaylist={this.addToPlaylist}
               handleFavoritesButton={this.handleFavoritesButton}
               allPodcast={this.state.allPodcast}
@@ -164,7 +174,8 @@ class App extends Component {
               handleEpisodeMenuClick={this.handleEpisodeMenuClick}
               hide={this.state.hide}
               thumbnail={this.state.thumbnail}
-              episode={this.state.episode}/>
+              episode={this.state.episode}
+              />
           </div>
         </div>
         <Footer hide={this.state.hide} thumbnail={this.state.thumbnail} podcast={this.state.podcast} episode={this.state.episode} />
