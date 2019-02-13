@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+.cat-logo {
+  width: 60px;
+}
+
 .column-1 {
   float: left;
   width: 32%;
@@ -43,4 +47,8 @@ code {
   height: 500px;
   background-color: #fff;
   overflow: scroll;
+}
+
+.center {
+  text-align: center;
 }

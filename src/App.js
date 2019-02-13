@@ -18,17 +18,14 @@ class App extends Component {
   state = {
     allPodcast: [],
     podcast: {},
-    firstIndex: 0,
-    lastIndex: 10,
     show: false,
     episode: {},
     thumbnail: {},
-    firstEpisodeIndex: 0,
-    lastEpisodeIndex: 5,
     search: '',
     filter: [],
     currentUser: {},
-    loggedIn: false
+    loggedIn: false,
+    hide: true
   }
 
   componentDidMount(){
@@ -70,35 +67,8 @@ class App extends Component {
     })
     this.setState({
       episode: foundEpisode,
-      thumbnail: this.state.podcast.thumbnail
-    })
-  }
-
-  addMore = () => {
-    this.setState({
-      firstIndex: this.state.firstIndex + 1,
-      lastIndex: this.state.lastIndex + 1
-    })
-  }
-
-  addMoreEpisodes = () => {
-    this.setState({
-      firstEpisodeIndex: this.state.firstEpisodeIndex+ 1,
-      lastEpisodeIndex: this.state.lastEpisodeIndex + 1
-    })
-  }
-
-  backEpisodes = () => {
-    this.setState({
-      firstEpisodeIndex: this.state.firstEpisodeIndex - 1,
-      lastEpisodeIndex: this.state.lastEpisodeIndex - 1
-    })
-  }
-
-  back = () => {
-    this.setState({
-      firstIndex: this.state.firstIndex - 1,
-      lastIndex: this.state.lastIndex - 1
+      thumbnail: this.state.podcast.thumbnail,
+      hide: false
     })
   }
 
@@ -140,6 +110,12 @@ class App extends Component {
     })
   }
 
+handleAudioPlayer = () => {
+  this.setState({
+    hide: !this.state.hide
+  })
+}
+
   dashBoardComponents(){
     return(
       <div>
@@ -147,10 +123,6 @@ class App extends Component {
         <div className='row'>
           <div className='col s3'>
             <AllPodcast
-              addMore={this.addMore}
-              back={this.back}
-              firstIndex={this.state.firstIndex}
-              lastIndex={this.state.lastIndex}
               allPodcast={this.filterSearchBar()}
               handleSearch={this.handleSearch}
               search={this.state.search}
@@ -158,21 +130,22 @@ class App extends Component {
           </div>
           <div className="col s9">
             <SelectedPodcast
+              addToPlaylist={this.addToPlaylist}
               handleFavoritesButton={this.handleFavoritesButton}
               allPodcast={this.state.allPodcast}
               podcast={this.state.podcast}
               show={this.state.show}
-              handleEpisodeMenuClick={this.handleEpisodeMenuClick}
-              addMoreEpisodes={this.addMoreEpisodes}
-              backEpisodes={this.backEpisodes}
-              firstEpisodeIndex={this.state.firstEpisodeIndex}
-              lastEpisodeIndex={this.state.lastEpisodeIndex}/>
-            <AudioPlayer thumbnail={this.state.thumbnail} podcast={this.state.podcast} episode={this.state.episode} />
+              handleEpisodeMenuClick={this.handleEpisodeMenuClick}/>
+            {!this.state.hide ?
+              <AudioPlayer thumbnail={this.state.thumbnail} podcast={this.state.podcast} episode={this.state.episode} />
+            : null}
           </div>
         </div>
       </div>
     )
   }
+
+
 
   dashBoardRoute(){
     if (this.state.loggedIn === true){

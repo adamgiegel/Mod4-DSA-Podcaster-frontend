@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-// import Create from './Create'
 import SearchForm from './SearchForm'
-import {InfiniteScroll} from 'react-materialize'
 
 
 class AllPodcast extends Component {
@@ -26,8 +24,6 @@ class AllPodcast extends Component {
       <div className="card-panel hoverable">
         <div>
           <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
-          <button className="btn" onClick={this.props.addMore}>Load More</button>
-          <button className="btn" onClick={this.props.back}>Go Back</button>
         </div>
         <div className="podcasts">
           <ul className="collection with-header">

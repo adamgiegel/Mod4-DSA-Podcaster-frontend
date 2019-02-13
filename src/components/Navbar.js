@@ -5,7 +5,7 @@ class Navbar extends Component {
     return(
       <nav>
         <div className="nav-wrapper">
-          <a href="c" className="brand-logo">Logo</a>
+          <a href="c" className="cat-logo"></a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li><a href='a'>Playlist</a></li>
             <li><a href='b'>Update User Info</a></li>

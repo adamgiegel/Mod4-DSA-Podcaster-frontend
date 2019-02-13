@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Collapsible, CollapsibleItem} from 'react-materialize'
+import striptags from 'striptags'
 
 class Episode extends Component {
   text_truncate = function(str, length, ending) {
@@ -19,7 +20,7 @@ class Episode extends Component {
     return(
       <Collapsible accordion defaultActiveKey={1}>
         <CollapsibleItem  header={this.props.episode.title}>
-          {this.text_truncate(this.props.episode.description, 500, '..')}
+          {striptags(this.text_truncate(this.props.episode.description, 500, '..'))}
         </CollapsibleItem>
         <button onClick={()=>this.props.handleEpisodeMenuClick(this.props.episode.id)} className="waves-effect waves-light btn">Play</button>
       </Collapsible>

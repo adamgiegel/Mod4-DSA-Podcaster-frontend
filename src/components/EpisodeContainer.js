@@ -9,8 +9,6 @@ class EpisodeContainer extends Component {
   render(){
     return(
       <div className="podcasts">
-        <button className="waves-effect waves-light btn" onClick={this.props.addMoreEpisodes}>Load More</button>
-        <button className="waves-effect waves-light btn" onClick={this.props.backEpisodes}>Go Back</button>
         <ul className="collection with-header">
           {
             this.props.episodes.map(episode => <Episode
