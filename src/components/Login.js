@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 // import 'materialize-css';
 // import 'materialize-css/dist/css/materialize.min.css';
 import { Card, Button, Row, Col } from 'react-materialize'
+// import BackgroundImage from 'https://media.giphy.com/media/bcKmIWkUMCjVm/giphy.gif'
 
 class Login extends Component {
   state = {
     showSignUp: false,
     name: '',
     username: '',
-    password: ''
+    password: '',
+    backgroundImage: 'url("https://media.giphy.com/media/bcKmIWkUMCjVm/giphy.gif")'
   }
 
   fetchSignUp = (e) => {
@@ -65,15 +67,17 @@ class Login extends Component {
             Password:
             <input value={this.state.password} onChange={(e) => this.handleChange(e)} type="password" name="password"/>
           </label>
-          <Button>Submit</Button></form>
+          <Button className="blue lighten-2">Submit</Button>
+          </form>
           <br/>
-          <Button onClick={this.handleSignUpButton}>SignUp</Button>
+          <Button className="blue lighten-2" onClick={this.handleSignUpButton}>SignUp</Button>
       </Card>
     )
   }
 
   signUpForm(){
     return (
+      <div style={{backgroundImage: this.state.backgroundImage}}>
       <Card>
         <form onSubmit={(e) => this.fetchSignUp(e)}>
           <label>
@@ -88,11 +92,12 @@ class Login extends Component {
             Password:
             <input value={this.state.password} onChange={(e) => this.handleChange(e)} type="password" name="password"/>
           </label>
-          <Button>Submit</Button>
+          <Button className="blue lighten-2">Submit</Button>
         </form>
+        <Button  className="blue lighten-2" onClick={this.handleSignUpButton}>Login Page</Button>
         <br/>
-        <Button onClick={this.handleSignUpButton}>Login Page</Button>
       </Card>
+      </div>
     )
   }
 
@@ -100,10 +105,11 @@ class Login extends Component {
     // console.log("render: ", this.state);
     return(
       <Row >
-      <Col s={3}></Col>
-      <Col s={6} m={6}>
-      {this.state.showSignUp === false ? this.loginForm() : this.signUpForm()}
-      </Col>
+        <Col s={4}>
+        </Col>
+        <Col s={3} m={4}>
+          {this.state.showSignUp === false ? this.loginForm() : this.signUpForm()}
+        </Col>
       </Row>
     )
   }

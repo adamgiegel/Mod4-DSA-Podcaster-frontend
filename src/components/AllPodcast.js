@@ -24,12 +24,14 @@ class AllPodcast extends Component {
   render(){
   return(
     <div className="content">
-      <div className="card-panel hoverable">
+      <div className="card-panel hoverable center">
         <div>
           <SearchForm search={this.props.search} handleSearch={this.props.handleSearch}/>
         </div>
-        <Button onClick={this.props.handleFavorites}></Button>
-        <div className="podcasts hoverable ">
+        <Button  className="blue lighten-2" onClick={this.props.handleFavorites}>FAVORITES</Button>
+        <br/>
+        <br/>
+        <div className="podcasts-container hoverable">
           <Collection>
             {
               this.props.allPodcast.map(podcast => {

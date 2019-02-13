@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Collapsible, CollapsibleItem} from 'react-materialize'
+import {Button, CollapsibleItem} from 'react-materialize'
 import striptags from 'striptags'
 
 class Episode extends Component {
@@ -18,12 +18,12 @@ class Episode extends Component {
   };
   render(){
     return(
-      <Collapsible accordion defaultActiveKey={1}>
+      <>
         <CollapsibleItem  header={this.props.episode.title}>
-          {striptags(this.text_truncate(this.props.episode.description, 500, '..'))}
+          {striptags(this.text_truncate(this.props.episode.description, 500, '..'))}<br/>
+          <Button onClick={()=>this.props.handleEpisodeMenuClick(this.props.episode.id)}  className="blue lighten-2">Play</Button>
         </CollapsibleItem>
-        <button onClick={()=>this.props.handleEpisodeMenuClick(this.props.episode.id)} className="waves-effect waves-light btn">Play</button>
-      </Collapsible>
+      </>
     )
   }
 }

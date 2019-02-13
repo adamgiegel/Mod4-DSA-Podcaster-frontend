@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import AllPodcast from './components/AllPodcast'
 import Footer from './components/Footer'
-import Navbar from './components/Navbar'
+import Naviebar from './components/Naviebar'
 import Login from './components/Login'
 import SelectedPodcast from './components/SelectedPodcast'
 import 'materialize-css';
@@ -13,7 +13,6 @@ import {
   Redirect,
   Route
 } from "react-router-dom";
-import StickyFooter from 'react-sticky-footer';
 
 class App extends Component {
   state = {
@@ -52,6 +51,27 @@ class App extends Component {
   }
   }
 
+  fetchUser(username, password){
+    fetch('http://localhost:3000/api/v1/users/login', {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body:JSON.stringify({
+        "username": username,
+        "password": password
+      }),
+      redirect: "follow"
+    })
+    .then(res => res.json())
+    .then(res => this.setState({
+      currentUser: res,
+      loggedIn: true,
+      favorites: res.podcasts
+    }))
+  }
+
   handleSearch = (e) => {
     this.setState({
       search: e.target.value
@@ -81,24 +101,7 @@ class App extends Component {
 
   handleLogin =(e, username, password) => {
     e.preventDefault()
-    fetch('http://localhost:3000/api/v1/users/login', {
-      method: "POST",
-      headers:{
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body:JSON.stringify({
-        "username": username,
-        "password": password
-      }),
-      redirect: "follow"
-    })
-    .then(res => res.json())
-    .then(res => this.setState({
-      currentUser: res,
-      loggedIn: true,
-      favorites: res.podcasts
-    }))
+    this.fetchUser(username, password)
     // .then(window.location.href = 'http://localhost:3001/dashboard')
   }
 
@@ -116,24 +119,31 @@ class App extends Component {
         "podcast_id": this.state.podcast.id
       })
     })
+    .then(() => this.fetchUser(this.state.currentUser.username, this.state.currentUser.password))
   }
 
-handleAudioPlayer = () => {
-  this.setState({
-    hide: !this.state.hide
-  })
-}
+  handleAudioPlayer = () => {
+    this.setState({
+      hide: !this.state.hide
+    })
+  }
 
-handleFavorites = () => {
-  this.setState({
-    favoriteShow: !this.state.favoriteShow
-  }, (e) => this.handleLogin(e, this.state.currentUser.username, this.state.currentUser.password))
-}
+  handleFavorites = () => {
+    this.setState({
+      favoriteShow: !this.state.favoriteShow
+    })
+  }
+
+  handleLogout = () => {
+    this.setState({
+      currentUser: {}
+    })
+  }
 
   dashBoardComponents(){
     return(
       <div>
-        <Navbar />
+        <Naviebar handleLogout={this.handleLogout}/>
         <div className='row'>
           <div className='col s3'>
             <AllPodcast
@@ -154,7 +164,6 @@ handleFavorites = () => {
               handleEpisodeMenuClick={this.handleEpisodeMenuClick}
               hide={this.state.hide}
               thumbnail={this.state.thumbnail}
-              podcast={this.state.podcast}
               episode={this.state.episode}/>
           </div>
         </div>
