@@ -1,15 +1,26 @@
 import React from 'react';
 import EpisodeContainer from './EpisodeContainer'
 import striptags from 'striptags'
-import { Card } from 'react-materialize'
+import { Button, Card, Row, Col } from 'react-materialize'
 
 const SelectedPodcast = ({podcast, show, handleEpisodeMenuClick, lastEpisodeIndex, firstEpisodeIndex, addMoreEpisodes, backEpisodes, handleFavoritesButton}) => {
 
   const clickedPodcast =
-  <Card>
-  <button className="waves-effect waves-light btn" onClick={handleFavoritesButton}>Add to Favorites</button>
-    <h1>{podcast.title}</h1>
-    <p>{striptags(podcast.description)}</p>
+  <Card className="topping">
+    <Row>
+      <Col s={3}>
+        <img src={podcast.img_url} alt='' />
+        <Button className="blue lighten-2" onClick={handleFavoritesButton}>Add to Favorites</Button>
+      </Col>
+      <Col s={6} m={6}>
+        <h4>{podcast.title}</h4>
+        <p>{striptags(podcast.description)}</p><br/>
+        <p>Episodes: {podcast.num_episodes}</p>
+        <p>Publisher: {podcast.publisher}</p>
+        <p>RSS: {podcast.rss}</p>
+
+      </Col>
+    </Row>
     <div>
       {
         <EpisodeContainer
@@ -20,7 +31,7 @@ const SelectedPodcast = ({podcast, show, handleEpisodeMenuClick, lastEpisodeInde
   </Card>
 
   const defaultPodcast =
-    <Card className="center">
+    <Card className="center topping">
       <h1>Welcome to DSA Podcaster</h1>
       <img src='https://media.giphy.com/media/bcKmIWkUMCjVm/giphy.gif' alt=''/>
     </Card>
