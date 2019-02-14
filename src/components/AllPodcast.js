@@ -19,8 +19,6 @@ class AllPodcast extends Component {
     }
   };
 
-
-
   render(){
   return(
     <div className="content">
@@ -37,6 +35,7 @@ class AllPodcast extends Component {
               this.props.allPodcast.map(podcast => {
                 return(
                     <CollectionItem
+                      key={podcast.id}
                       className="card-panel hoverable left-align"
                       onClick={() => this.props.handlePodcastMenuClick(podcast.id)}
                       id="title">

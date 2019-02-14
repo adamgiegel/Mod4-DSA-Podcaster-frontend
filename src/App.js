@@ -27,7 +27,8 @@ class App extends Component {
     loggedIn: false,
     hide: true,
     favorites: [],
-    favoriteShow: false
+    favoriteShow: false,
+    playlists: {}
   }
 
   componentDidMount(){
@@ -41,6 +42,7 @@ class App extends Component {
         allPodcast: podcast
       })
     })
+    this.fetchPlaylists()
   }
 
   filterSearchBar = () => {
@@ -49,6 +51,16 @@ class App extends Component {
     } else {
       return this.state.favorites.filter(podcast => podcast.title.toLowerCase().includes(this.state.search.toLowerCase()))
     }
+  }
+
+  fetchPlaylists(){
+    fetch('http://localhost:3000/api/v1/playlists')
+    .then(response => response.json())
+    .then(res => {
+      this.setState({
+        playlists: res
+      })
+    })
   }
 
   fetchUser(username, password){
@@ -68,7 +80,7 @@ class App extends Component {
     .then(res => this.setState({
       currentUser: res,
       loggedIn: true,
-      favorites: res.podcasts // PLAYLIST HERE
+      favorites: res.podcasts
     }))
   }
 
@@ -123,11 +135,20 @@ class App extends Component {
     .then(() => this.fetchUser(this.state.currentUser.username, this.state.currentUser.password))
   }
 
-  handleDeleteFavoritesButton = (id) => {
-    fetch(`http://localhost:3000/api/v1/playlists/${id}`, {
+  handleDeleteFavoritesButton = (podcast_id) => {
+    let found_playlist = this.state.playlists.find(playlist => {
+      if (playlist.user.id === this.state.currentUser.id && playlist.podcast.id === podcast_id){
+        return true
+      } else {
+        return false
+      }
+    })
+
+    fetch(`http://localhost:3000/api/v1/playlists/${found_playlist.id}`, {
       method: "DELETE"
     })
     .then(() => this.fetchUser(this.state.currentUser.username, this.state.currentUser.password))
+    .then(() => this.fetchPlaylists())
   }
 
   handleAudioPlayer = () => {
@@ -147,8 +168,6 @@ class App extends Component {
       currentUser: {}
     })
   }
-
-//delete me
 
   dashBoardComponents(){
     return(
