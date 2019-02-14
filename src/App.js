@@ -148,6 +148,8 @@ class App extends Component {
     })
   }
 
+//delete me
+
   dashBoardComponents(){
     return(
       <div>
