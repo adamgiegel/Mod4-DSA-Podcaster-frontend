@@ -131,8 +131,8 @@ class App extends Component {
       })
     })
     .then(res => res.json())
-    .then((res) => console.log(res))
     .then(() => this.fetchUser(this.state.currentUser.username, this.state.currentUser.password))
+    .then(() => this.fetchPlaylists())
   }
 
   handleDeleteFavoritesButton = (podcast_id) => {

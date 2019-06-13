@@ -10,7 +10,7 @@ const SelectedPodcast = ({podcast, show, favoriteShow, handleEpisodeMenuClick, l
     <Row>
       <Col s={3}>
         <img src={podcast.img_url} alt='' />
-        {favoriteShow ? <Button className="blue lighten-2" onClick={() => handleDeleteFavoritesButton(podcast.id)}>Delete from Favorites</Button>:<Button className="blue lighten-2" onClick={handleFavoritesButton}>Add to Favorites</Button>}
+        {favoriteShow ? <Button className="blue lighten-2" onClick={() => handleDeleteFavoritesButton(podcast.id)}>Delete Favorites</Button>:<Button className="blue lighten-2" onClick={handleFavoritesButton}>Add Favorites</Button>}
       </Col>
       <Col s={6} m={6}>
         <h4>{podcast.title}</h4>

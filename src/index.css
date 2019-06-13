@@ -95,3 +95,7 @@ code {
 .topping {
   /* border-top: 2px solid blue; */
 }
+
+.login-form{
+  margin: 10%;
+}

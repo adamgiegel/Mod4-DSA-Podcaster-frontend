@@ -104,7 +104,7 @@ class Login extends Component {
   render(){
     // console.log("render: ", this.state);
     return(
-      <Row >
+      <Row className="login-form">
         <Col s={4}>
         </Col>
         <Col s={3} m={4}>
